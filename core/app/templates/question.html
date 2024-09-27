@@ -1,17 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire</title>
+    <title>Список вопросов</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            background-color: #007bff; /* Ярко-синий */
+        }
+        .navbar a {
+            color: #fff !important;
+        }
+        .navbar a:hover {
+            color: #ffc107 !important; /* Ярко-желтый */
+        }
+        h2 {
+            color: #007bff; /* Ярко-синий */
+        }
+    </style>
 </head>
 <body>
-    <h1>Questionnaire</h1>
-        {% for key, value in data.items %}
-        <h1>{{ value }}</h1>
-        {% for i in value %}
-        <p>{{ i }}</p>
-        {% endfor %}
-        {% endfor %}
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Оприсник</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/questions/">Список вопросов</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Список вопросов</h2>
+        <form>
+            <div id="questions">
+                {% for question in questions %}
+                    <div class="card my-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ question.text }}</h5>
+                            {% for answer in question.answers %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="question{{ forloop.counter }}" id="answer{{ forloop.parentloop.counter }}{{ forloop.counter }}" value="{{ answer }}">
+                                    <label class="form-check-label" for="answer{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+                                        {{ answer }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Отправить</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

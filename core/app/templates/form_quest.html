@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная</title>
+    <title>Добавить вопрос</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .navbar {
@@ -30,33 +30,32 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#statistics">Статистика</a>
+                        <a class="nav-link" href="#">Добавить вопрос</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/questions/">Список вопросов</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/root/">Редактор вопросов</a>
-                    </li>
-
                 </ul>
             </div>
         </div>
     </nav>
 
     <div class="container mt-4">
-        <div id="statistics">
-            <h2>Статистика</h2>
-            <p>Здесь будет отображаться статистика.</p>
-        </div>
-
-        <div id="questions" class="mt-4">
-            <h2>Список вопросов</h2>
-            <p>Здесь будет отображаться список вопросов.</p>
-        </div>
+        <h2>Добавить вопрос</h2>
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="questionText" class="form-label">Текст вопроса</label>
+                <input type="text" class="form-control" id="questionText" placeholder="Введите текст вопроса">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Варианты ответов</label>
+                <input type="text" class="form-control mb-2" placeholder="Ответ 1">
+                <input type="text" class="form-control mb-2" placeholder="Ответ 2">
+                <input type="text" class="form-control mb-2" placeholder="Ответ 3">
+                <input type="text" class="form-control mb-2" placeholder="Ответ 4">
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
