@@ -44,7 +44,9 @@
                 <div class="card my-3">
                     <div class="card-body">
                         <h5 class="card-title">{{ question.text }}</h5>
-                        <form>
+                        
+                        <form action="/delete/{{ question.id_quest }}">
+                        {% csrf_token %}
                             {% for answer in question.answers %}
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="question{{ forloop.parentloop.counter }}" id="answer{{ forloop.counter }}" value="{{ answer }}">
@@ -52,10 +54,9 @@
                                         {{ answer }}
                                     </label>
                                 </div>
-                            {% endfor %}
-                            <button type="submit" class="btn btn-primary mt-3">Редактировать</button>
+                                {% endfor %}
                             <button type="submit" class="btn btn-danger mt-3">Удалить</button>
-
+                            
                         </form>
                     </div>
                 </div>

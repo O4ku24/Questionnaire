@@ -21,7 +21,8 @@ from app.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('questions/', question),
+    path('questions/', question_render),
     path('root/', root),
-    path('add/', add_quest)
+    path('add/', add_quest),
+    path('delete/<int:id_question>', delete_quest)
 ]

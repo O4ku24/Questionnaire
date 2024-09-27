@@ -39,18 +39,18 @@
 
     <div class="container mt-4">
         <h2>Добавить вопрос</h2>
-        <form method="post" action="">
+        <form method="post" action="/add/">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="questionText" class="form-label">Текст вопроса</label>
-                <input type="text" class="form-control" id="questionText" placeholder="Введите текст вопроса">
+                <input type="text" class="form-control" id="questionText" placeholder="Введите текст вопроса" name="question">
             </div>
             <div class="mb-3">
                 <label class="form-label">Варианты ответов</label>
-                <input type="text" class="form-control mb-2" placeholder="Ответ 1">
-                <input type="text" class="form-control mb-2" placeholder="Ответ 2">
-                <input type="text" class="form-control mb-2" placeholder="Ответ 3">
-                <input type="text" class="form-control mb-2" placeholder="Ответ 4">
+                <input type="text" class="form-control mb-2" placeholder="Ответ 1" name="answer1">
+                <input type="text" class="form-control mb-2" placeholder="Ответ 2" name="answer2">
+                <input type="text" class="form-control mb-2" placeholder="Ответ 3" name="answer3">
+                <input type="text" class="form-control mb-2" placeholder="Ответ 4" name="answer4">
             </div>
             <button type="submit" class="btn btn-primary">Добавить</button>
         </form>
