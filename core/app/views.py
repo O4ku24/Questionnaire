@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Questions, Users
+from .stata import get_stata
 
 def home(request):
     return render(request=request, template_name='home.html')
@@ -14,7 +15,7 @@ def question_render(request):
         return render(request=request, template_name='question.html', context={'questions': data})
     
     if request.method == 'POST':
-        data = {}
+        data = []
         return render(request=request, template_name='question.html', content=data)
     
 def root(request):
@@ -60,3 +61,9 @@ def delete_quest(request, id_question):
                      'answers':[quest.answer1, quest.answer2, quest.answer3, quest.answer4], 
                      'id_quest':quest.id})
     return render(request=request, template_name='root.html', context={'questions': data})
+
+def statistik_render(request):
+    if request.method == "GET":
+        data = get_stata()
+        print(data)
+        return render(request=request, template_name='statistik.html')
