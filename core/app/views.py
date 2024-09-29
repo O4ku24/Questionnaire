@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Questions, Users
-from .stata import get_stata
+from .models import Questions
+from .stata import get_stata, add_stata
 
 def home(request):
     return render(request=request, template_name='home.html')
@@ -11,12 +11,18 @@ def question_render(request):
         data = []
         questions_list = Questions.objects.all()
         for quest in questions_list:
-            data.append({'text':quest.question, 'answers':[quest.answer1, quest.answer2, quest.answer3, quest.answer4]})
+            data.append({'text':quest.question, 
+                         'answers':[quest.answer1, quest.answer2, quest.answer3, quest.answer4]})
+            
         return render(request=request, template_name='question.html', context={'questions': data})
     
     if request.method == 'POST':
-        data = []
-        return render(request=request, template_name='question.html', content=data)
+        name = request.POST.get("username")
+        question = request.POST.get("quest") #не могу получить от формы эту переменную 
+        answer = request.POST.get("answer")
+        print(request.POST)
+        print(f'\nname - {name}\nquestion - {question}\nanswer - {answer}\n')
+        return render(request=request, template_name='home.html')
     
 def root(request):
 
@@ -24,10 +30,11 @@ def root(request):
         data = []
         questions_list = Questions.objects.all()
         for quest in questions_list:
-            print(quest.id)
+            
             data.append({'text':quest.question, 
                          'answers':[quest.answer1, quest.answer2, quest.answer3, quest.answer4], 
                          'id_quest':quest.id})
+            
         return render(request=request, template_name='root.html', context={'questions': data})
 
     if request.method == 'POST':
@@ -40,11 +47,13 @@ def add_quest(request):
         return render(request=request, template_name='form_quest.html')
     
     if request.method == 'POST':
+
         quest = request.POST.get('question')
         answer1 = request.POST.get('answer1') 
         answer2 = request.POST.get('answer2') 
         answer3 = request.POST.get('answer3') 
         answer4 = request.POST.get('answer4') 
+
         Questions.objects.get_or_create(question = quest, 
                                         answer1 = answer1,
                                         answer2 = answer2,

@@ -25,5 +25,5 @@ urlpatterns = [
     path('root/', root),
     path('add/', add_quest),
     path('delete/<int:id_question>', delete_quest),
-    path('statistik/', statistik_render )
+    path('statistik/', statistik_render ),
 ]

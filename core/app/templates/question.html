@@ -49,26 +49,25 @@
 
     <div class="container mt-4">
         <h2>Пойдите опрос</h2>
-        <form>
+        <form method="POST" action="/questions/">
+            {% csrf_token %}
             <input type="text" class="form-control mb-2" placeholder="Введите Ваше имя" name="username">
             <div id="questions">
                 {% for question in questions %}
                     <div class="card my-3">
                         <div class="card-body">
-                            <h5 class="card-title">{{ question.text }}</h5>
-                            {% for answer in question.answers %}
+                                <h5 type="text" class="card-title" name="quest" value='{{ question.text }}'>{{ question.text }}</h5>
+                                {% for answer in question.answers %}
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="question{{ forloop.counter }}" id="answer{{ forloop.parentloop.counter }}{{ forloop.counter }}" value="{{ answer }}">
-                                    <label class="form-check-label" for="answer{{ forloop.parentloop.counter }}{{ forloop.counter }}">
-                                        {{ answer }}
-                                    </label>
+                                    <input class="form-check-input" type="radio" name="answer" value="{{ answer }}">
+                                    <label class="form-check-label" >{{ answer }}</label>
                                 </div>
                             {% endfor %}
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-primary mt-3">Ответить</button>
                 {% endfor %}
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Отправить</button>
         </form>
     </div>
 
