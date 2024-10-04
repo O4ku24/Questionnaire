@@ -51,22 +51,22 @@
         <h2>Пойдите опрос</h2>
         <form method="POST" action="/questions/">
             {% csrf_token %}
-            <input type="text" class="form-control mb-2" placeholder="Введите Ваше имя" name="username">
+        <input type="text" class="form-control mb-2" placeholder="Введите Ваше имя" name="username">
+            {% for question in questions %}
             <div id="questions">
-                {% for question in questions %}
                     <div class="card my-3">
                         <div class="card-body">
-                                <h5 type="text" class="card-title" name="quest" value='{{ question.text }}'>{{ question.text }}</h5>
-                                {% for answer in question.answers %}
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="answer" value="{{ answer }}">
-                                    <label class="form-check-label" >{{ answer }}</label>
-                                </div>
+                            <h5 type="text" class="card-title" name="quest" value="{{ question.text }}">{{ question.text }}</h5>
+                            {% for answer in question.answers %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="answer{{ forloop.parentloop.counter }}{{ forloop.counter }}" name="answer" value="{{ answer }}">
+                                <label class="form-check-label" for="answer{{ forloop.parentloop.counter }}{{ forloop.counter }}">{{ answer }}</label>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Ответить</button>
                 {% endfor %}
+                <button type="submit" class="btn btn-primary mt-3">Ответить</button>
             </div>
         </form>
     </div>

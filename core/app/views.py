@@ -12,17 +12,29 @@ def question_render(request):
         questions_list = Questions.objects.all()
         for quest in questions_list:
             data.append({'text':quest.question, 
-                         'answers':[quest.answer1, quest.answer2, quest.answer3, quest.answer4]})
+                         'answers':[quest.answer1, 
+                                    quest.answer2, 
+                                    quest.answer3, 
+                                    quest.answer4]})
             
         return render(request=request, template_name='question.html', context={'questions': data})
     
     if request.method == 'POST':
-        name = request.POST.get("username")
-        question = request.POST.get("quest") #не могу получить от формы эту переменную 
-        answer = request.POST.get("answer")
-        print(request.POST)
-        print(f'\nname - {name}\nquestion - {question}\nanswer - {answer}\n')
-        return render(request=request, template_name='home.html')
+        name = request.POST.get("username") #не могу получить от формы эту переменную
+        question = request.POST.get("quest") 
+        answer_list = request.POST.get("answer")
+        print(f'\n{request.POST}')
+        print(f'\nname - {name}\nquestion - {question}\nanswer - {answer_list}\n')
+        data = []
+        questions_list = Questions.objects.all()
+        for quest in questions_list:
+            data.append({'text':quest.question, 
+                         'answers':[quest.answer1, 
+                                    quest.answer2, 
+                                    quest.answer3, 
+                                    quest.answer4]})
+            
+        return render(request=request, template_name='question.html', context={'questions': data})
     
 def root(request):
 
@@ -32,7 +44,10 @@ def root(request):
         for quest in questions_list:
             
             data.append({'text':quest.question, 
-                         'answers':[quest.answer1, quest.answer2, quest.answer3, quest.answer4], 
+                         'answers':[quest.answer1, 
+                                    quest.answer2, 
+                                    quest.answer3, 
+                                    quest.answer4], 
                          'id_quest':quest.id})
             
         return render(request=request, template_name='root.html', context={'questions': data})
@@ -67,7 +82,10 @@ def delete_quest(request, id_question):
     questions_list = Questions.objects.all()
     for quest in questions_list:
         data.append({'text':quest.question, 
-                     'answers':[quest.answer1, quest.answer2, quest.answer3, quest.answer4], 
+                     'answers':[quest.answer1, 
+                                quest.answer2, 
+                                quest.answer3, 
+                                quest.answer4], 
                      'id_quest':quest.id})
     return render(request=request, template_name='root.html', context={'questions': data})
 
