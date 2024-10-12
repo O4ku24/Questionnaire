@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from collections import defaultdict
 from .models import Questions
 from .stata import get_stata, add_stata
 
@@ -20,11 +21,21 @@ def question_render(request):
         return render(request=request, template_name='question.html', context={'questions': data})
     
     if request.method == 'POST':
-        name = request.POST.get("username") #не могу получить от формы эту переменную
-        question = request.POST.get("quest") 
-        answer_list = request.POST.get("answer")
-        print(f'\n{request.POST}')
-        print(f'\nname - {name}\nquestion - {question}\nanswer - {answer_list}\n')
+        user_answer = {}
+        name = request.POST.get("username") 
+        answer_quest_list = request.POST.getlist('answer')
+        user_answer['username'] = name
+        user_answer['answer'] = defaultdict(list)
+        for i in answer_quest_list:
+            answer = i.split(', ')
+            question = answer[0]
+            response = answer[1]
+            user_answer['answer'][question].append(response)  # Добавляем ответ к вопросу
+        user_answer['answer'] = dict(user_answer['answer'])
+        print(user_answer)
+
+        return render(request=request, template_name='question.html')
+
         data = []
         questions_list = Questions.objects.all()
         for quest in questions_list:
@@ -34,7 +45,6 @@ def question_render(request):
                                     quest.answer3, 
                                     quest.answer4]})
             
-        return render(request=request, template_name='question.html', context={'questions': data})
     
 def root(request):
 
